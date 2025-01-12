@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\code\\c-language\\test_1.12\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{363837C8-B0A6-4EE5-B6A3-B024BA09CBE6}|test_1.12\\test_1.12.vcxproj|D:\\code\\c-language\\test_1.12\\test_1.12\\test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{363837C8-B0A6-4EE5-B6A3-B024BA09CBE6}|test_1.12\\test_1.12.vcxproj|solutionrelative:test_1.12\\test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{540B174C-8533-4238-9E54-6447FD653292}|test_1.12\\test_1.12.vcxproj|D:\\code\\c-language\\test_1.12\\test_1.12\\test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{540B174C-8533-4238-9E54-6447FD653292}|test_1.12\\test_1.12.vcxproj|solutionrelative:test_1.12\\test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -24,9 +24,9 @@
               "RelativeDocumentMoniker": "test_1.12\\test.c",
               "ToolTip": "D:\\code\\c-language\\test_1.12\\test_1.12\\test.c",
               "RelativeToolTip": "test_1.12\\test.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-01-12T02:26:04.405Z",
+              "WhenOpened": "2025-01-12T02:38:42.762Z",
               "EditorCaption": ""
             }
           ]
