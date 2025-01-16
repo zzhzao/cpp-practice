@@ -2,6 +2,9 @@
 #include<stdio.h>
 int main()
 {
-	printf("hehe");
+	int a = 0;
+	int b = 0;
+	int ret= scanf("%d%d", &a, &b);
+	printf("%d", ret);
 	return 0;
 }
