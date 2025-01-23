@@ -119,25 +119,38 @@
 //	printf("%f", ret);
 //	return 0;
 //}
+//int main()
+//{
+//	int a[10] = { 0 };
+//	int b[10] = { 0 };
+//	int i = 0,tmp = 0;
+//	for (i = 0;i < 10;i++)
+//		scanf("%d", &a[i]);
+//	for (i = 0;i < 10;i++)
+//		scanf("%d", &b[i]);
+//	for (i = 0;i < 10;i++)
+//	{
+//		tmp = a[i];
+//		a[i] = b[i];
+//		b[i] = tmp;
+//	}
+//	for (i = 0;i < 10;i++)
+//		printf("%d ", a[i]);
+//	printf("\n");
+//	for (i = 0;i < 10;i++)
+//		printf("%d ", b[i]);
+//	return 0;
+//}
+
+extern a;
 int main()
 {
-	int a[10] = { 0 };
-	int b[10] = { 0 };
-	int i = 0,tmp = 0;
-	for (i = 0;i < 10;i++)
-		scanf("%d", &a[i]);
-	for (i = 0;i < 10;i++)
-		scanf("%d", &b[i]);
-	for (i = 0;i < 10;i++)
-	{
-		tmp = a[i];
-		a[i] = b[i];
-		b[i] = tmp;
-	}
-	for (i = 0;i < 10;i++)
-		printf("%d ", a[i]);
-	printf("\n");
-	for (i = 0;i < 10;i++)
-		printf("%d ", b[i]);
+	int ret = 2 * a;
+	printf("%d", ret);
 	return 0;
 }
+
+
+
+
+
