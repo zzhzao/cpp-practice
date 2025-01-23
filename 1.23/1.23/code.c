@@ -84,37 +84,49 @@
 //	return 0;
 //}
 
-void init(int arr[],int sz)
-{
-	for (int i = 0;i < sz;i++)
-		arr[i] = 0;
-}
-void print(int arr[], int sz)
-{
-	for (int i = 0;i < sz;i++)
-		printf("%d ", arr[i]);
-}
-void reverse(int arr[], int sz)
-{
-	int left = 0;
-	int right = sz - 1;
-	int tmp = 0;
-	while (left < right)
-	{
-		tmp = arr[left];
-		arr[left] = arr[right];
-		arr[right] = tmp;
-		left++;
-		right--;
-	}
-}
+//void init(int arr[],int sz)
+//{
+//	for (int i = 0;i < sz;i++)
+//		arr[i] = 0;
+//}
+//void print(int arr[], int sz)
+//{
+//	for (int i = 0;i < sz;i++)
+//		printf("%d ", arr[i]);
+//}
+//void reverse(int arr[], int sz)
+//{
+//	int left = 0;
+//	int right = sz - 1;
+//	int tmp = 0;
+//	while (left < right)
+//	{
+//		tmp = arr[left];
+//		arr[left] = arr[right];
+//		arr[right] = tmp;
+//		left++;
+//		right--;
+//	}
+//}
+//int main()
+//{
+//	int arr[10] = { 1,2,3,4,5,6,7,8,9,10 };
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	//init(arr,sz);
+//	//print(arr, sz);
+//	reverse(arr, sz);
+//	print(arr, sz);
+//	return 0;
+//}
+
 int main()
 {
-	int arr[10] = { 1,2,3,4,5,6,7,8,9,10 };
-	int sz = sizeof(arr) / sizeof(arr[0]);
-	//init(arr,sz);
-	//print(arr, sz);
-	reverse(arr, sz);
-	print(arr, sz);
-	return 0;
+    int i = 0;
+    int arr[] = { 1,2,3,4,5,6,7,8,9,10 };
+    for (i = 0; i <= 12; i++)
+    {
+        arr[i] = 0;
+        printf("hello bit\n");
+    }
+    return 0;
 }
