@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include"game.h"
+int win = 0;
 void initboard(char board[ROWS][COLS], int r, int c, char set)
 {
 	int i = 0;
@@ -15,6 +16,7 @@ void initboard(char board[ROWS][COLS], int r, int c, char set)
 void displayboard(char board[ROWS][COLS], int r, int c)
 {
 	int i = 0;
+
 	int j = 0;
 	for(i = 1;i <= r;i++)
 	{
@@ -57,9 +59,52 @@ int getcount(char mine[ROWS][COLS],int x,int y)
 	int count = mine[x - 1][y - 1] + mine[x][y - 1] + mine[x + 1][y - 1] + mine[x - 1][y] + mine[x + 1][y] + mine[x - 1][y + 1] + mine[x][y + 1] + mine[x + 1][y + 1] - 8 * mine[x][y];
 }
 
+
+
+
+
+
+void showboard(char mine[ROWS][COLS], char show[ROWS][COLS], int x, int y)
+{
+	if (x > 0 && y > 0 && x <= ROW && y <= COL)
+	{
+		if ((show[x][y] == '*')&&(mine[x][y]!='1'))
+		{
+			int count = getcount(mine, x, y);
+			show[x][y] = '0' + count;
+			win++;
+			//如果周围雷的个数为0,则周围一圈的坐标都进行showboard操作
+			if (show[x][y] < '1')
+			{
+				showboard(mine, show, x - 1, y - 1);
+				showboard(mine, show, x - 1, y);
+				showboard(mine, show, x - 1, y + 1);
+				showboard(mine, show, x, y - 1);
+				showboard(mine, show, x, y + 1);
+				showboard(mine, show, x + 1, y - 1);
+				showboard(mine, show, x + 1, y);
+				showboard(mine, show, x + 1, y + 1);
+			}
+			else
+				return;
+		}
+		else
+			return;
+	}
+	else
+		return;
+	
+}
+
+
+
+
+
+
+
+
 void findmine(char mine[ROWS][COLS],char show[ROWS][COLS], int r, int c)
 {
-	int win = 0;
 	while (win != r * c - EASY_COUNT)
 	{
 		printf("请输入你要查找的坐标:");
@@ -75,18 +120,20 @@ void findmine(char mine[ROWS][COLS],char show[ROWS][COLS], int r, int c)
 			}
 			else
 			{
-				int count = getcount(mine, x, y);
-				show[x][y] = '0' + count;
-				win++;
-				displayboard(show, ROW, COL);
+				//int count = getcount(mine, x, y);
+				//show[x][y] = '0' + count;
+				//win++;
+				//displayboard(show, ROW, COL);
+				showboard(mine, show, x, y);
 			}
+			displayboard(show, ROW, COL);
 		}
 		else
 			printf("输入错误");
 	}
 	if (win == r * c - EASY_COUNT)
 	{
-		printf("你赢了");
+		printf("你赢了\n");
 		displayboard(mine, ROW, COL);
 	}
 }
