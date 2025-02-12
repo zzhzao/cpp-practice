@@ -137,3 +137,38 @@ void findmine(char mine[ROWS][COLS],char show[ROWS][COLS], int r, int c)
 		displayboard(mine, ROW, COL);
 	}
 }
+
+
+//void findmine(char mine[ROWS][COLS], char show[ROWS][COLS], int r, int c)
+//{
+//	int win = 0;
+//	while (win != r * c - EASY_COUNT)
+//	{
+//		printf("ÇëÊäÈëÄãÒª²éÕÒµÄ×ø±ê:");
+//		int x = 0, y = 0;
+//		scanf("%d%d", &x, &y);
+//		if (x > 0 && y > 0 && x <= r && y <= c)
+//		{
+//			if (mine[x][y] == '1')
+//			{
+//				printf("ºÜÒÅº¶,ÄãÊäÁË\n");
+//				displayboard(mine, ROW, COL);
+//				break;
+//			}
+//			else
+//			{
+//				int count = getcount(mine, x, y);
+//				show[x][y] = '0' + count;
+//				win++;
+//				displayboard(show, ROW, COL);
+//			}
+//		}
+//		else
+//			printf("ÊäÈë´íÎó");
+//	}
+//	if (win == r * c - EASY_COUNT)
+//	{
+//		printf("ÄãÓ®ÁË");
+//		displayboard(mine, ROW, COL);
+//	}
+//}
