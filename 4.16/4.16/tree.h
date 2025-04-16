@@ -25,3 +25,4 @@ int HeapSize(Heap* hp);
 // ╤я╣деп©у
 bool HeapEmpty(Heap* hp);
 void HeapSort(int* a, int n);
+void HeapSort1(int* a, int n);

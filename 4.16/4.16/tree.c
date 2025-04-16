@@ -21,21 +21,7 @@ void Swap(int* x, int* y)
 	*x = *y;
 	*y = tmp;
 }
-void AdjustUp(HPDataType* arr, int child)
-{
-	int parent = (child - 1) / 2;
-	while (child > 0)
-	{
-		if (arr[child] < arr[parent])
-		{
-			Swap(&arr[child], &arr[parent]);
-			child = parent;
-			parent = (child - 1) / 2;
-		}
-		else
-			break;
-	}
-}
+
 void HeapPush(Heap* php, HPDataType x)
 {
 	assert(php);
@@ -102,6 +88,37 @@ void HeapSort(int* a, int n)
 	for (int i = (n - 1 - 1) / 2; i >= 0; i--)
 	{
 		AdjustDown(a, i, n);
+	}
+	int end = n - 1;
+	while (end > 0)
+	{
+		Swap(&a[0], &a[end]);
+		AdjustDown(a, 0, end);
+		end--;
+	}
+}
+void AdjustUp(HPDataType* arr, int child)
+{
+	int parent = (child - 1) / 2;
+	while (child > 0)
+	{
+		if (arr[child] < arr[parent])
+		{
+			Swap(&arr[child], &arr[parent]);
+			child = parent;
+			parent = (child - 1) / 2;
+		}
+		else
+			break;
+	}
+}
+void HeapSort1(int* a, int n)
+{
+	int i = 0;
+	while (i < n)
+	{
+		AdjustUp(a, i);
+		i++;
 	}
 	int end = n - 1;
 	while (end > 0)
