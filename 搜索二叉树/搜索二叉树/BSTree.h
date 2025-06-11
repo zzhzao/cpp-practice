@@ -2,16 +2,21 @@
 #include<iostream>
 #include<string>
 using namespace std;
-template<class K>
+template<class K,class V>
 
-struct BSTreeNode
+struct BSTNode
 
 {
+	// pair<K, V> _kv;
+
 	K _key;
-	BSTNode<K>* _left;
-	BSTNode<K>* _right;
-	BSTNode(const K& key)
+	V _value;
+	BSTNode<K, V>* _left;
+	BSTNode<K, V>* _right;
+	BSTNode(const K& key, const V& value)
+
 		:_key(key)
+		, _value(value)
 		, _left(nullptr)
 		, _right(nullptr)
 	{
@@ -19,31 +24,34 @@ struct BSTreeNode
 };
 
 
-template<class K>
+template<class K, class V>
+
 class BSTree
+
 {
-	typedef BSTreeNode<K> Node;
+	typedef BSTNode<K, V> Node;
+
 public:
 	BSTree() = default;
-	BSTree(const BSTree<K>& t)
+	BSTree(const BSTree<K, V>& t)
 	{
 		_root = Copy(t._root);
 	}
-	BSTree<K>& operator=(BSTree<K> t)
+	BSTree<K, V>& operator=(BSTree<K, V> t)
 	{
 		swap(_root, t._root);
 		return *this;
 	}
 	~BSTree()
 	{
-		Destory(_root);
+		Destroy(_root);
 		_root = nullptr;
 	}
-	bool Insert(const K& key)
+	bool Insert(const K& key, const V& value)
 	{
 		if (_root == nullptr)
 		{
-			_root = new Node(key);
+			_root = new Node(key, value);
 			return true;
 		}
 		Node* parent = nullptr;
@@ -60,29 +68,31 @@ public:
 				parent = cur;
 				cur = cur->_left;
 			}
-			else {
+			else
+
+			{
 				return false;
 			}
-			cur = new Node(key);
-			if (parent->_key > key)
-			{
-				parent->_left = cur;
-			}
-			else
-			{
-				parent->_right = cur;
-			}
-			return true;
 		}
+		cur = new Node(key, value);
+		if (parent->_key < key)
+		{
+			parent->_right = cur;
+		}
+		else
+
+		{
+			parent->_left = cur;
+		}
+		return true;
 	}
-	bool Find(const K& key)
+	Node* Find(const K& key)
 	{
 		Node* cur = _root;
 		while (cur)
 		{
 			if (cur->_key < key)
 			{
-
 				cur = cur->_right;
 			}
 			else if (cur->_key > key)
@@ -90,12 +100,12 @@ public:
 				cur = cur->_left;
 			}
 			else
+
 			{
-				return true;
+				return cur;
 			}
 		}
-
-		return false;
+		return nullptr;
 	}
 	bool Erase(const K& key)
 	{
@@ -113,70 +123,75 @@ public:
 				parent = cur;
 				cur = cur->_left;
 			}
-			else {
+			else
+
+			{
 				if (cur->_left == nullptr)
 				{
-					if (cur == _root)
+					if (parent == nullptr)
 					{
-						_root = _root->_right;
-					}
-					if (parent->_right == cur)
-					{
-						parent->_right = cur->_right;
+						_root = cur->_right;
 					}
 					else
+
 					{
-						parent->_left = cur->_right;
+						if (parent->_left == cur)
+							parent->_left = cur->_right;
+						else
+
+							parent->_right = cur->_right;
 					}
 					delete cur;
+					return true;
 				}
-				else if(cur->_right == nullptr)
+				else if (cur->_right == nullptr)
 				{
-					if (cur == _root)
+					if (parent == nullptr)
 					{
-						_root = _root->_left;
-					}
-					if (parent->_right == cur)
-					{
-						parent->_right = cur->_left;
+						_root = cur->_left;
 					}
 					else
+
 					{
-						parent->_left = cur->_left;
+						if (parent->_left == cur)
+							parent->_left = cur->_left;
+						else
+
+							parent->_right = cur->_left;
+
 					}
 					delete cur;
+					return true;
 				}
 				else
+
 				{
-					Node* pMinRight = cur;
-					Node* minRight = cur->_right;
-					while (minRight->_left)
+					Node* rightMinP = cur;
+					Node* rightMin = cur->_right;
+					while (rightMin->_left)
 					{
-						pMinRight = minRight;
-						minRight = minRight->_left;
+						rightMinP = rightMin;
+						rightMin = rightMin->_left;
 					}
-					swap(minRight->_key, cur->_key);
-					if (pMinRight->_left == minRight)
-					{
-						pMinRight->_left = minRight->_right;
-					}
+					cur->_key = rightMin->_key;
+					if (rightMinP->_left == rightMin)
+						rightMinP->_left = rightMin->_right;
 					else
-					{
-						pMinRight->_right = minRight->_right;
-					}
-					delete minRight;
+
+						rightMinP->_right = rightMin->_right;
+					delete rightMin;
+					return true;
 				}
-				return true;
 			}
 		}
 		return false;
-	}	
-
+	}
 	void InOrder()
 	{
 		_InOrder(_root);
 		cout << endl;
 	}
+
 private:
 	void _InOrder(Node* root)
 	{
@@ -185,28 +200,25 @@ private:
 			return;
 		}
 		_InOrder(root->_left);
-		cout << root->_key << ' ';
+		cout << root->_key << ":" << root->_value << endl;
 		_InOrder(root->_right);
+	}
+	void Destroy(Node* root)
+	{
+		if (root == nullptr)
+			return;
+		Destroy(root->_left);
+		Destroy(root->_right);
+		delete root;
 	}
 	Node* Copy(Node* root)
 	{
 		if (root == nullptr)
-			return;
-		Node* copy = new Node(root->_key);
-		copy->_left = Copy(root->_left);
-		copy->_right = Copy(root->_right);
-		return copy;
-	}
-	void Destory(Node* root)
-	{
-		if (root == nullptr)
-		{
-			return;
-		}
-
-		Destory(root->_left);
-		Destory(root->_right);
-		delete root;
+			return nullptr;
+		Node* newRoot = new Node(root->_key, root->_value);
+		newRoot->_left = Copy(root->_left);
+		newRoot->_right = Copy(root->_right);
+		return newRoot;
 	}
 private:
 	Node* _root = nullptr;
