@@ -84,7 +84,7 @@ public:
 			{
 				Node* uncle = grandfather->_right;
 				//直接变色 
-				if (uncle && uncle->_col == red)
+				if (uncle && uncle->_col == RED)
 				{
 					parent->_col = uncle->_col = BLACK;
 					grandfather->_col = RED;
@@ -116,7 +116,7 @@ public:
 			{
 				Node* uncle = grandfather->_left;
 				//直接变色 
-				if (uncle && uncle->_col == red)
+				if (uncle && uncle->_col == RED)
 				{
 					parent->_col = uncle->_col = BLACK;
 					grandfather->_col = RED;
@@ -148,19 +148,11 @@ public:
 		_root->_col = BLACK;
 		return true;
 	}
-	void _InOrder(Node* root)
+
+	void InOrder()
 	{
-		if (root == nullptr)
-		{
-			return;
-		}
-
-
-		_InOrder(root->_left);
-		cout << root->_kv.first << " ";
-		_InOrder(root->_right);
+		_InOrder(_root);
 	}
-
 
 	// 前序递归遍历
 	bool Check(Node* root, int blackNum, const int refNum)
@@ -292,5 +284,17 @@ public:
 		}
 	}
 private:
+	void _InOrder(Node* root)
+	{
+		if (root == nullptr)
+		{
+			return;
+		}
+
+
+		_InOrder(root->_left);
+		cout << root->_kv.first << " ";
+		_InOrder(root->_right);
+	}
 	Node* _root = nullptr;
 };
