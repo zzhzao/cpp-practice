@@ -1,25 +1,25 @@
-#define _CRT_SECURE_NO_WARNINGS 1
 class Solution {
 public:
-    int bitSquareSum(int n) {
+    int sumofsquares(int x)
+    {
         int sum = 0;
-        while (n > 0)
+        while (x)
         {
-            int bit = n % 10;
-            sum += bit * bit;
-            n = n / 10;
+            int tmp = x % 10;
+            sum += tmp * tmp;
+            x /= 10;
         }
         return sum;
     }
-
     bool isHappy(int n) {
-        int slow = n, fast = n;
-        do {
-            slow = bitSquareSum(slow);
-            fast = bitSquareSum(fast);
-            fast = bitSquareSum(fast);
-        } while (slow != fast);
+        int slow = sumofsquares(n);
+        int fast = sumofsquares(slow);
+        while (slow != fast)
+        {
+            slow = sumofsquares(slow);
 
+            fast = sumofsquares(sumofsquares(fast));
+        }
         return slow == 1;
     }
 };
