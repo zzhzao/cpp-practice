@@ -1,4 +1,5 @@
 #pragma once
+#include<iostream>
 namespace zzh
 {
     template<class T>
@@ -188,4 +189,4 @@ namespace zzh
         iterator _finish = nullptr; // 指向有效数据的尾
         iterator _endOfStorage = nullptr; // 指向存储容量的尾
     };
-}依据vector的自我实现和以上代码生成一篇博客
+}
