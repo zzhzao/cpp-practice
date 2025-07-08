@@ -1,18 +1,34 @@
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
+    vector<vector<int>> threeSum(vector<int>& nums) {
         sort(nums.begin(), nums.end());
-        int left = 0, right = nums.size() - 1;
-        while (left < right)
+        int n = nums.size();
+        vector<vector<int>> ret;
+        for (int i = 0; i < n - 2;)
         {
-            int sum = nums[left] + nums[right];
-            if (sum > target)
-                right--;
-            else if (sum < target)
-                left++;
-            else
-                return { left,right };
+            if (nums[i] > 0)
+                break;
+            int left = i + 1, right = n - 1, target = -nums[i];
+            while (left < right)
+            {
+                if (nums[left] + nums[right] > target)
+                    right--;
+                else if (nums[left] + nums[right] < target)
+                    left++;
+                else
+                {
+                    ret.push_back({ nums[i],nums[left],nums[right] });
+                    left++;right--;
+                    while (left < right && nums[left] == nums[left - 1]) left++;
+                    while (left < right && nums[right] == nums[right + 1])  right--;
+                }
+            }
+            i++;
+            while (i < n && nums[i] == nums[i - 1])
+            {
+                i++;
+            }
         }
-        return { -1,-1 };
+        return ret;
     }
 };
