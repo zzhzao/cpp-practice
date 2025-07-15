@@ -1,32 +1,20 @@
-#define _CRT_SECURE_NO_WARNINGS 1
 class Solution {
 public:
     int minOperations(vector<int>& nums, int x) {
-        int n = nums.size();
-        int sum = accumulate(nums.begin(), nums.end(), 0);
-
-        if (sum < x) {
-            return -1;
+        int sum = 0;
+        for (int a : nums) sum += a;
+        int target = sum - x;
+        if (target < 0) return -1;
+        int ret = -1;
+        for (int left = 0, right = 0, tmp = 0;right < nums.size();right++)
+        {
+            tmp += nums[right];
+            while (tmp > target)
+                tmp -= nums[left++];
+            if (target == tmp)
+                ret = max(right - left + 1, ret);
         }
-
-        int right = 0;
-        int lsum = 0, rsum = sum;
-        int ans = n + 1;
-
-        for (int left = -1; left < n; ++left) {
-            if (left != -1) {
-                lsum += nums[left];
-            }
-            while (right < n && lsum + rsum > x) {
-                rsum -= nums[right];
-                ++right;
-            }
-            if (lsum + rsum == x) {
-                ans = min(ans, (left + 1) + (n - right));
-            }
-        }
-
-        return ans > n ? -1 : ans;
+        if (ret == -1) return -1;
+        else return nums.size() - ret;
     }
 };
-
