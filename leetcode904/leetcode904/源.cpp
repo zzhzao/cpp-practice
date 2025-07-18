@@ -1,24 +1,20 @@
-#define _CRT_SECURE_NO_WARNINGS 1
 class Solution {
 public:
     int totalFruit(vector<int>& fruits) {
-        int n = fruits.size();
-        unordered_map<int, int> cnt;
-
-        int left = 0, ans = 0;
-        for (int right = 0; right < n; ++right) {
-            ++cnt[fruits[right]];
-            while (cnt.size() > 2) {
-                auto it = cnt.find(fruits[left]);
-                --it->second;
-                if (it->second == 0) {
-                    cnt.erase(it);
-                }
-                ++left;
+        int hash[100001] = { 0 };
+        int ret = 0;
+        for (int left = 0, right = 0, kinds = 0;right < fruits.size();right++)
+        {
+            if (hash[fruits[right]] == 0) kinds++;
+            hash[fruits[right]]++;
+            while (hash.size() > 2)
+            {
+                hash[fruits[left]]--;
+                if (hash[fruits[left]] == 0) kinds--;
+                left++;
             }
-            ans = max(ans, right - left + 1);
+            ret = max(ret, right - left + 1);
         }
-        return ans;
+        return ret;
     }
 };
-
