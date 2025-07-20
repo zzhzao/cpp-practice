@@ -1,5 +1,7 @@
 #pragma once
 #include<iostream>
+#include <initializer_list>
+#include<vector>
 namespace zzh
 {
     template<class T>
