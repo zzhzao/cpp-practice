@@ -59,3 +59,11 @@ int main()
 	cout << x << " " << y;
 	return 0;
 }
+//不能传引用返回实例
+
+
+int& func(int x, int y)
+{
+	int ret = x + y * 10;
+	return ret;
+}
