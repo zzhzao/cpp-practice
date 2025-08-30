@@ -49,21 +49,40 @@ void swap(int& a, int& b)
 	a = b;
 	b = tmp;
 }
+//
+//int main()
+//{
+//
+//	int x = 1;
+//	int y = 2;
+//	swap(x, y);
+//	cout << x << " " << y;
+//	return 0;
+//
+//
+//	const int& ra = 30;
+//}
+////不能传引用返回实例
+
+//
+//int& func(int x, int y)
+//{
+//	int ret = x + y * 10;
+//	return ret;
+//}
+//
+//
+//int main()
+//{
+//	double b = 0.1;
+//	int d = b;//支持隐式类型转换
+//	//int& rd  = b; //常性，用const引用
+//	return 0;
+//}
 
 int main()
 {
-
-	int x = 1;
-	int y = 2;
-	swap(x, y);
-	cout << x << " " << y;
-	return 0;
-}
-//不能传引用返回实例
-
-
-int& func(int x, int y)
-{
-	int ret = x + y * 10;
-	return ret;
+	const int a = 0;
+	int* ptr = &a;
+	//报错是由于&a的类型是const int* 在这里权限放大
 }
