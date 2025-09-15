@@ -43,10 +43,13 @@ namespace zzh
 		if (n > _capacity)
 		{
 			char* tmp = new char[n + 1];
-			memcpy(tmp, _str, _size + 1);
-			delete[] _str;
-			_str = tmp;
-			_capacity = n;
+			if (_str)
+			{
+				memcpy(tmp, _str, _size + 1);
+				delete[] _str;
+				_str = tmp;
+				_capacity = n;
+			}
 		}
 	}
 
@@ -176,27 +179,33 @@ namespace zzh
 		}
 		return ret;
 	}
-	string::string(const string& s)
-	{
-		_str = new char[s._capacity + 1];
-		memcpy(_str, s._str, _size + 1);
-	}
-	string& string::operator=(const string& s)
-	{
-		if (&s != this)
-		{
-			char* tmp = new char[s._capacity + 1];
-			memcpy(tmp, s._str, s._size + 1);
-			delete[] _str;
+	//string::string(const string& s)
+	//{
+	//	_str = new char[s._capacity + 1];
+	//	memcpy(_str, s._str, _size + 1);
+	//}
+	//string& string::operator=(const string& s)
+	//{
+	//	if (&s != this)
+	//	{
+	//		//char* tmp = new char[s._capacity + 1];
+	//		//memcpy(tmp, s._str, s._size + 1);
+	//		//delete[] _str;
 
-			_str = tmp;
-			_size = s._size;
-			_capacity = s._capacity;
-		}
+	//		//_str = tmp;
+	//		//_size = s._size;
+	//		//_capacity = s._capacity;
+	//		string tmp(s);
+	//		swap(tmp);
+	//	}
+	//	return *this;
+
+	//}
+	string& string::operator=(string tmp)
+	{
+		swap(tmp);
 		return *this;
-
 	}
-
 	bool string::operator<(const string& s) const
 	{
 		size_t i1 = 0, i2 = 0;
@@ -219,22 +228,22 @@ namespace zzh
 
 		return i2 < s._size;
 	}
-	bool string::operator>(const string& s) const
-	{
-	
-	}
-	bool string::operator<=(const string& s) const
-	{
+	//bool string::operator>(const string& s) const
+	//{
+	//
+	//}
+	//bool string::operator<=(const string& s) const
+	//{
 
-	}
-	bool string::operator>=(const string& s) const
-	{
+	//}
+	//bool string::operator>=(const string& s) const
+	//{
 
-	}
-	bool string::operator==(const string& s) const
-	{
-		
-	}
+	//}
+	//bool string::operator==(const string& s) const
+	//{
+	//	
+	//}
 	bool string::operator!=(const string& s) const
 	{
 		size_t i1 = 0, i2 = 0;

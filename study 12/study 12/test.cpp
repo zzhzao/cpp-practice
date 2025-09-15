@@ -93,9 +93,14 @@ namespace zzh
 		s1.erase(5, 2);
 		cout << s1.c_str();
 	}
+	void test9()
+	{
+		std::string s1;
+		cout << sizeof(s1);
+	}
 }
 int main()
 {
-	zzh::test8();
+	zzh::test9();
 	return 0;
 }

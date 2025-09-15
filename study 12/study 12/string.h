@@ -43,9 +43,12 @@ namespace zzh
 
 		~string()
 		{
-			delete[] _str;
-			_str = nullptr;
-			_size = _capacity = 0;
+			if (_str)
+			{
+				delete[] _str;
+				_str = nullptr;
+				_size = _capacity = 0;
+			}
 		}
 
 		size_t size() const;
@@ -67,9 +70,9 @@ namespace zzh
 		size_t find(const char* str, size_t pos = 0)const;
 		
 		string substr(size_t pos = 0, size_t len = npos) const;
-		string(const string& s);
-		string& operator=(const string& s);
-
+		//string(const string& s);
+		//string& operator=(const string& s);
+		string& operator=(string tmp);
 		void clear();
 
 		size_t capacity()const;
@@ -82,11 +85,27 @@ namespace zzh
 		bool operator!=(const string& s) const;
 
 		void swap(string& s);
+		string(const string& s)
+		{
+			//string tmp(s._str);
+			string tmp(s.begin(), s.end());
+			swap(tmp);
+		}
 		
+		template <class InputIterator>
+		string(InputIterator first, InputIterator last)
+		{
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+		}
+
 	private:
 		char* _str;
-		size_t _size;
-		size_t _capacity;
+		size_t _size = 0;
+		size_t _capacity = 0;
 	
 	public:
 		static const size_t npos;
