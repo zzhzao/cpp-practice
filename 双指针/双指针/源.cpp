@@ -39,3 +39,72 @@ public:
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+//复写零
+
+class Solution {
+public:
+    void duplicateZeros(vector<int>& arr) {
+        int src = 0;
+        int dest = 0;
+        vector<int> v;
+        v.reserve(arr.size());
+        while (dest < arr.size())
+        {
+            if (arr[src] == 0)
+            {
+                v[dest++] = 0;
+                if (dest < arr.size())
+                    v[dest++] = 0;
+            }
+            else
+            {
+                v[dest++] = arr[src];
+            }
+            src++;
+        }
+        for (int i = 0;i < arr.size();i++)
+        {
+            arr[i] = v[i];
+        }
+    }
+};
+
+
+///////////
+class Solution{
+public:
+    void duplicateZeros(vector<int>&arr) {
+        int cur = 0;
+        int dest = 0;
+        int n = arr.size();
+        while (cur < n)
+        {
+            if (arr[cur])
+                dest++;
+            else
+                dest += 2;
+            if (dest >= n)
+            {
+                dest--;
+                break;
+            }
+            cur++;
+        }
+        if (dest == n)
+        {
+            dest = n - 2;
+            cur--;
+            arr[n - 1] = 0;
+        }
+        while (cur >= 0)
+        {
+            if (arr[cur]) arr[dest--] = arr[cur--];
+            else
+            {
+                arr[dest--] = 0;
+                arr[dest--] = 0;
+                cur--;
+            }
+        }
+    }
+};
