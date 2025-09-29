@@ -108,3 +108,31 @@ public:
         }
     }
 };
+
+////////////////////////////////////////
+//快乐数
+class Solution {
+public:
+    int bitsum(int n) {
+        int sum = 0;
+        while (n != 0) {
+            sum += (n % 10) * (n % 10);
+            n /= 10;
+        }
+        return sum;
+    }
+    bool isHappy(int n) {
+        int slow = n;
+        int fast = bitsum(n);
+        while (fast != slow) {
+            fast = bitsum(bitsum(fast));
+            slow = bitsum(slow);
+        }
+        if (fast == 1 && fast == slow) {
+            return true;
+        }
+
+        return false;
+
+    }
+};
