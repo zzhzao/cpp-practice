@@ -1,23 +1,35 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-using namespace std;
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if (nums.size() == 0)
+        {
+            return { -1,-1 };
+        }
+        int left = 0, right = nums.size() - 1;
+        int resleft = -1;
+        int resright = -1;
+        while (left < right)
+        {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] >= target) right = mid;
+            else left = mid + 1;
+        }
+        if (nums[left] == target)
+        {
+            resleft = left;
+        }
+        left = 0;right = nums.size() - 1;
+        while (left < right)
+        {
+            int mid = left + (right - left) / 2 + 1;
+            if (nums[mid] <= target) left = mid;
+            else right = mid - 1;
+        }
+        if (nums[right] == target)
+        {
+            resright = right;
+        }
+        return { resleft,resright };
 
-int main() {
-    int n;
-    cin >> n;
-    vector<int> cost(n);
-    for (int i = 0; i < n; ++i) {
-        cin >> cost[i];
     }
-
-    vector<int> dp(n + 1);
-    dp[0] = 0;
-    dp[1] = 0;
-
-    for (int i = 2; i <= n; ++i) {
-        dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
-    }
-    cout << dp[n] << endl;
-    return 0;
-}
+};
