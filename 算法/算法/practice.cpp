@@ -1,23 +1,18 @@
 class Solution {
 public:
-    int findMaxLength(vector<int>& nums) {
-        unordered_map<int, int> hash;
-        hash[0] = -1;
-        int sum = 0;
-        int ret = 0;
-        for (int i = 0;i < nums.size();i++)
+    bool isUnique(string astr) {
+        int hash[26] = { 0 };
+        for (auto e : astr)
         {
-            sum += nums[i] == 0 ? -1 : 1;
-            if (hash.count(sum))
+            if (hash[e - 'a'] == 0)
             {
-                ret = max(ret, i - hash[sum]);
+                hash[e - 'a']++;
             }
-            else
+            else if (hash[e - 'a'] == 1)
             {
-                hash[sum] = i;
+                return false;
             }
-
         }
-        return ret;
+        return true;
     }
 };
