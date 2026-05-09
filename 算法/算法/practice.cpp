@@ -1,18 +1,19 @@
 class Solution {
 public:
-    bool isUnique(string astr) {
-        int hash[26] = { 0 };
-        for (auto e : astr)
+    int singleNumber(vector<int>& nums) {
+        int ret = 0;
+        for (int i = 0; i < 32;i++)
         {
-            if (hash[e - 'a'] == 0)
+            int sum = 0;
+            for (auto e : nums)
             {
-                hash[e - 'a']++;
+                sum += e >> i & 1;
             }
-            else if (hash[e - 'a'] == 1)
+            if (sum % 3 != 0)
             {
-                return false;
+                ret |= (1 << i);
             }
         }
-        return true;
+        return ret;
     }
 };
