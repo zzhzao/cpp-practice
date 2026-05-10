@@ -1,19 +1,47 @@
 class Solution {
 public:
-    string countAndSay(int n) {
-        string ret = "1";
-        for (int i = 1; i < n; ++i) {
-            string tmp;
-            int len = ret.size();
-            for (int left = 0, right = 0; right < len; ) {
-                while (right < len && ret[left] == ret[right]) {
-                    right++;
+    int minNumberOfFrogs(string croakOfFrogs) {
+        string t = "croak";
+        int n = t.size();
+        vector<int> hash(n);
+
+        unordered_map<char, int> index;
+
+        for (int i = 0; i < n; i++)
+            index[t[i]] = i;
+        for (auto e : croakOfFrogs)
+        {
+            if (e == 'c')
+            {
+                if (hash[n - 1] != 0)
+                {
+                    hash[n - 1]--;
+                    hash[0]++;
                 }
-                tmp += to_string(right - left) + ret[left];
-                left = right;
+                else
+                {
+                    hash[0]++;
+                }
             }
-            ret = tmp;
+            else
+            {
+                int i = index[e];
+                if (hash[i - 1] == 0)
+                {
+                    return -1;
+                }
+                else
+                {
+                    hash[i - 1]--;
+                    hash[i]++;
+                }
+            }
         }
-        return ret;
+        for (int i = 0;i < n - 1;i++)
+        {
+            if (hash[i] != 0)
+                return -1;
+        }
+        return hash[n - 1];
     }
 };
