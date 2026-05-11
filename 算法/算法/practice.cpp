@@ -1,47 +1,15 @@
 class Solution {
 public:
-    int minNumberOfFrogs(string croakOfFrogs) {
-        string t = "croak";
-        int n = t.size();
-        vector<int> hash(n);
-
-        unordered_map<char, int> index;
-
-        for (int i = 0; i < n; i++)
-            index[t[i]] = i;
-        for (auto e : croakOfFrogs)
+    void sortColors(vector<int>& nums) {
+        for (int i = 0;i < nums.size();i++)
         {
-            if (e == 'c')
+            for (int j = 0;j < nums.size() - i;j++)
             {
-                if (hash[n - 1] != 0)
+                if (j != nums.size() - 1 && nums[j] > nums[j + 1])
                 {
-                    hash[n - 1]--;
-                    hash[0]++;
-                }
-                else
-                {
-                    hash[0]++;
-                }
-            }
-            else
-            {
-                int i = index[e];
-                if (hash[i - 1] == 0)
-                {
-                    return -1;
-                }
-                else
-                {
-                    hash[i - 1]--;
-                    hash[i]++;
+                    swap(nums[j], nums[j + 1]);
                 }
             }
         }
-        for (int i = 0;i < n - 1;i++)
-        {
-            if (hash[i] != 0)
-                return -1;
-        }
-        return hash[n - 1];
     }
 };
