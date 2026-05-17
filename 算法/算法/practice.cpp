@@ -1,51 +1,31 @@
 class Solution {
-    int tmp[50010];
 public:
-    int reversePairs(vector<int>& nums) {
-        return mergesort(nums, 0, nums.size() - 1);
-    }
-    int mergesort(vector<int>& nums, int left, int right)
-    {
-        int ret = 0;
-        if (left >= right)
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* ret = new ListNode(0);
+        ListNode* Ret = ret;
+        int cnt = 0;
+        while (l1 || l2 || cnt)
         {
-            return 0;
-        }
-        int mid = (right - left) / 2 + left;
-        int cur1 = left, cur2 = mid + 1, i = 0;
-        ret += mergesort(nums, left, mid);
-        ret += mergesort(nums, mid + 1, right);
-
-        while (cur1 <= mid)
-        {
-            for (;cur2 <= right;cur2++)
+            int tmp = 0;
+            if (l1)
             {
-                if (nums[cur1] / 2.0 > nums[cur2])
-                {
-                    ret += right - cur2 + 1;
-                    break;
-                }
+                tmp += l1->val;
+                l1 = l1->next;
             }
-            cur1++;
-        }
-
-        cur1 = left, cur2 = mid + 1;
-        while (cur1 <= mid && cur2 <= right)
-        {
-            if (nums[cur1] > nums[cur2])
+            if (l2)
             {
-                tmp[i++] = nums[cur1++];
+                tmp += l2->val;
+                l2 = l2->next;
             }
-            else
+            tmp += cnt;
+            cnt = 0;
+            if (tmp > 9)
             {
-                tmp[i++] = nums[cur2++];
+                cnt = tmp / 10;
             }
+            ret->next = new ListNode(tmp % 10);
+            ret = ret->next;
         }
-        while (cur1 <= mid)    tmp[i++] = nums[cur1++];
-        while (cur2 <= right)      tmp[i++] = nums[cur2++];
-
-        for (int j = left; j <= right; j++)
-            nums[j] = tmp[j - left];
-        return ret;
+        return Ret->next;
     }
 };
