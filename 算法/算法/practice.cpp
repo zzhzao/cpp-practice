@@ -1,30 +1,18 @@
 class Solution {
 public:
-    bool CheckPermutation(string s1, string s2) {
-        if (s1.size() != s2.size())
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        unordered_map<int, int> hash;
+        for (int i = 0;i < nums.size();i++)
         {
-            return false;
-        }
-        int hash1[26] = { 0 };
-        int hash2[26] = { 0 };
-        int target = 0;
-        for (auto e : s1)
-        {
-            hash1[e - 'a']++;
-            target++;
-        }
-        int count = 0;
-        for (auto e : s2)
-        {
-            if (hash2[e - 'a'] < hash1[e - 'a'])
+            auto it = hash.find(nums[i]);
+            if (it != hash.end())
             {
-                count++;
+                if ((i - it->second) <= k)
+                {
+                    return true;
+                }
             }
-            hash2[e - 'a']++;
-        }
-        if (target == count)
-        {
-            return true;
+            hash[nums[i]] = i;
         }
         return false;
     }
