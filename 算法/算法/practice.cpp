@@ -1,19 +1,31 @@
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> hash;
-        for (int i = 0;i < nums.size();i++)
+    bool CheckPermutation(string s1, string s2) {
+        if (s1.size() != s2.size())
         {
-            auto it = hash.find(target - nums[i]);
-            if (it != hash.end())
-            {
-                return { it->second,i };
-            }
-            else
-            {
-                hash[nums[i]] = i;
-            }
+            return false;
         }
-        return { -1,-1 };
+        int hash1[26] = { 0 };
+        int hash2[26] = { 0 };
+        int target = 0;
+        for (auto e : s1)
+        {
+            hash1[e - 'a']++;
+            target++;
+        }
+        int count = 0;
+        for (auto e : s2)
+        {
+            if (hash2[e - 'a'] < hash1[e - 'a'])
+            {
+                count++;
+            }
+            hash2[e - 'a']++;
+        }
+        if (target == count)
+        {
+            return true;
+        }
+        return false;
     }
 };
