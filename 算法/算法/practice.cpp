@@ -1,25 +1,29 @@
 class Solution {
 public:
-    string addBinary(string a, string b) {
-        int cur1 = a.size() - 1;
-        int cur2 = b.size() - 1;
-        int count = 0;
-        string ret;
-        while (cur1 >= 0 || cur2 >= 0 || count > 0)
-        {
-            if (cur1 >= 0) count += a[cur1--] - '0';
-            if (cur2 >= 0) count += b[cur2--] - '0';
+    string multiply(string num1, string num2) {
+        int m = num1.size(), n = num2.size();
+        reverse(num1.begin(), num1.end());
+        reverse(num2.begin(), num2.end());
+        vector<int> tmp(m + n - 1);
 
-            if (count % 2 == 0)
+        for (int i = 0;i < m;i++)
+        {
+            for (int j = 0; j < n;j++)
             {
-                ret += '0';
+                tmp[i + j] += (num1[i] - '0') * (num2[j] - '0');
             }
-            else
-            {
-                ret += '1';
-            }
-            count /= 2;
         }
+        string ret;
+        int count = 0;
+        int cur = 0;
+        while (cur < m + n - 1 || count)
+        {
+            if (cur < m + n - 1)
+                count += tmp[cur++];
+            ret += (count % 10) + '0';
+            count /= 10;
+        }
+        while (ret.size() > 1 && ret.back() == '0') ret.pop_back();
         reverse(ret.begin(), ret.end());
         return ret;
     }
