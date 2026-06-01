@@ -1,34 +1,40 @@
 class Solution {
 public:
-    bool backspaceCompare(string s, string t) {
-        string s1, s2;
-        for (auto e : s)
-        {
-            if (!s1.empty() && e == '#')
-            {
-                s1.pop_back();
+    int calculate(string s) {
+        vector<int> stack;
+        int n = s.size();
+        int i = 0;
+        char op = '+';
+        while (i < n) {
+            int tmp = 0;
+            if (s[i] == ' ')
+                i++;
+            else if (s[i] >= '0' && s[i] <= '9') {
+                while (i < n && s[i] >= '0' && s[i] <= '9') {
+                    tmp = tmp * 10 + (s[i++] - '0');
+                }
+                if (op == '+') {
+                    stack.push_back(tmp);
+                }
+                else if (op == '-') {
+                    stack.push_back(-tmp);
+                }
+                else if (op == '*') {
+                    stack.back() *= tmp;
+                }
+                else {
+                    stack.back() /= tmp;
+                }
             }
-            else if (e != '#')
-            {
-                s1.push_back(e);
+            else {
+                op = s[i];
+                i++;
             }
         }
-        for (auto e : t)
-        {
-            if (!s2.empty() && e == '#')
-            {
-                s2.pop_back();
-            }
-            else if (e != '#')
-            {
-                s2.push_back(e);
-            }
+        int ret = 0;
+        for (auto e : stack) {
+            ret += e;
         }
-        if (s1 == s2)
-        {
-            return true;
-        }
-        return false;
-
+        return ret;
     }
 };
