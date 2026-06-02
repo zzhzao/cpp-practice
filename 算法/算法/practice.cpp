@@ -1,40 +1,57 @@
 class Solution {
 public:
-    int calculate(string s) {
-        vector<int> stack;
-        int n = s.size();
+    string decodeString(string s) {
+        vector<int> nums;
+        vector<string> strs;
         int i = 0;
-        char op = '+';
-        while (i < n) {
-            int tmp = 0;
-            if (s[i] == ' ')
+        int n = s.size();
+        while (i < n)
+        {
+            if (s[i] >= '0' && s[i] <= '9')
+            {
+                int tmp = 0;
+                while (i < n && s[i] >= '0' && s[i] <= '9')
+                {
+                    tmp = tmp * 10 + (s[i] - '0');
+                    i++;
+                }
+                nums.push_back(tmp);
+            }
+            else if (s[i] == '[')
+            {
+                strs.push_back("");
                 i++;
-            else if (s[i] >= '0' && s[i] <= '9') {
-                while (i < n && s[i] >= '0' && s[i] <= '9') {
-                    tmp = tmp * 10 + (s[i++] - '0');
+
+            }
+            else if (s[i] == ']')
+            {
+                int k = nums.back();
+                nums.pop_back();
+                string tmp;
+                while (k--)
+                {
+                    tmp += strs.back();
                 }
-                if (op == '+') {
-                    stack.push_back(tmp);
-                }
-                else if (op == '-') {
-                    stack.push_back(-tmp);
-                }
-                else if (op == '*') {
-                    stack.back() *= tmp;
+                strs.pop_back();
+                if (!strs.empty()) {
+                    strs.back() += tmp;
                 }
                 else {
-                    stack.back() /= tmp;
+                    strs.push_back(tmp);
                 }
-            }
-            else {
-                op = s[i];
                 i++;
             }
+            else
+            {
+                string str;
+                while (i < n && s[i] >= 'a' && s[i] <= 'z')
+                {
+                    str += s[i++];
+                }
+                if (!strs.empty()) strs.back() += str;
+                else strs.push_back(str);
+            }
         }
-        int ret = 0;
-        for (auto e : stack) {
-            ret += e;
-        }
-        return ret;
+        return strs[0];
     }
 };
