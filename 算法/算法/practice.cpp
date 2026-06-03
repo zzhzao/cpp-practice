@@ -1,21 +1,31 @@
+
 class Solution {
 public:
-    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
-        stack<int> st;
-        int i = 0, n = popped.size();
-        for (auto e : pushed)
+    vector<vector<int>> levelOrder(Node* root) {
+        vector<vector<int>> ret;
+        queue<Node*> q;
+        if (root == nullptr)
         {
-            st.push(e);
-            while (st.size() && st.top() == popped[i])
+            return ret;
+        }
+        q.push(root);
+        while (q.size())
+        {
+            int sz = q.size();
+            vector<int> tmp;
+            for (int i = 0; i < sz;i++)
             {
-                st.pop();
-                i++;
+                Node* node = q.front();
+                tmp.push_back(node->val);
+                for (Node* e : node->children)
+                {
+                    if (e != nullptr)
+                        q.push(e);
+                }
+                q.pop();
             }
+            ret.push_back(tmp);
         }
-        if (i == n)
-        {
-            return true;
-        }
-        return false;
+        return ret;
     }
 };
