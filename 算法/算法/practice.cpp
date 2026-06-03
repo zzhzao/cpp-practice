@@ -1,39 +1,25 @@
 class Solution {
 public:
-    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-        vector<vector<int>> ret;
-        queue<TreeNode*> q;
-        if (root == nullptr)
-        {
-            return ret;
-        }
-        q.push(root);
-        int level = 0;
+    int widthOfBinaryTree(TreeNode* root) {
+        vector<pair<TreeNode*, unsigned int>> q;
+        q.push_back({ root, 1 });
+        unsigned int ret = 0;
+
         while (q.size())
         {
-
+            vector<pair<TreeNode*, unsigned int>> tmp;
             int sz = q.size();
-            vector<int> tmp;
-            for (int i = 0; i < sz;i++)
+            ret = max(ret, q[sz - 1].second - q[0].second + 1);
+
+
+            for (auto& [x, y] : q)
             {
-                TreeNode* node = q.front();
-                tmp.push_back(node->val);
-                if (node->left)
-                {
-                    q.push(node->left);
-                }
-                if (node->right)
-                {
-                    q.push(node->right);
-                }
-                q.pop();
+                if (x->left)
+                    tmp.push_back({ x->left,2 * y });
+                if (x->right)
+                    tmp.push_back({ x->right,2 * y + 1 });
             }
-            if (level % 2 == 1)
-            {
-                reverse(tmp.begin(), tmp.end());
-            }
-            level++;
-            ret.push_back(tmp);
+            q = tmp;
         }
         return ret;
     }
