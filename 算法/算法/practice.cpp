@@ -1,25 +1,38 @@
 class Solution {
 public:
-    int widthOfBinaryTree(TreeNode* root) {
-        vector<pair<TreeNode*, unsigned int>> q;
-        q.push_back({ root, 1 });
-        unsigned int ret = 0;
-
+    vector<int> largestValues(TreeNode* root) {
+        vector<int> ret;
+        queue<TreeNode*> q;
+        if (root == nullptr)
+        {
+            return ret;
+        }
+        q.push(root);
         while (q.size())
         {
-            vector<pair<TreeNode*, unsigned int>> tmp;
+
             int sz = q.size();
-            ret = max(ret, q[sz - 1].second - q[0].second + 1);
-
-
-            for (auto& [x, y] : q)
+            vector<int> tmp;
+            for (int i = 0; i < sz;i++)
             {
-                if (x->left)
-                    tmp.push_back({ x->left,2 * y });
-                if (x->right)
-                    tmp.push_back({ x->right,2 * y + 1 });
+                TreeNode* node = q.front();
+                tmp.push_back(node->val);
+                if (node->left)
+                {
+                    q.push(node->left);
+                }
+                if (node->right)
+                {
+                    q.push(node->right);
+                }
+                q.pop();
             }
-            q = tmp;
+            int num = tmp[0];
+            for (auto e : tmp)
+            {
+                num = max(num, e);
+            }
+            ret.push_back(num);
         }
         return ret;
     }
