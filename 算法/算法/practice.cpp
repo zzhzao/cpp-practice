@@ -1,39 +1,22 @@
-class Solution {
+class KthLargest {
+    priority_queue<int, vector<int>, greater<int>> heap;
+    int _k;
 public:
-    vector<int> largestValues(TreeNode* root) {
-        vector<int> ret;
-        queue<TreeNode*> q;
-        if (root == nullptr)
+    KthLargest(int k, vector<int>& nums) {
+        for (auto e : nums)
         {
-            return ret;
+            heap.push(e);
+            if (heap.size() > k)
+            {
+                heap.pop();
+            }
         }
-        q.push(root);
-        while (q.size())
-        {
+        _k = k;
+    }
 
-            int sz = q.size();
-            vector<int> tmp;
-            for (int i = 0; i < sz;i++)
-            {
-                TreeNode* node = q.front();
-                tmp.push_back(node->val);
-                if (node->left)
-                {
-                    q.push(node->left);
-                }
-                if (node->right)
-                {
-                    q.push(node->right);
-                }
-                q.pop();
-            }
-            int num = tmp[0];
-            for (auto e : tmp)
-            {
-                num = max(num, e);
-            }
-            ret.push_back(num);
-        }
-        return ret;
+    int add(int val) {
+        heap.push(val);
+        if (heap.size() > _k) heap.pop();
+        return heap.top();
     }
 };
