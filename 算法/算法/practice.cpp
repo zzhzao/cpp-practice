@@ -1,42 +1,42 @@
-class Solution {
-
-    typedef pair<string, int> PSI;
-    class cmp
-    {
-    public:
-        bool operator()(const PSI& a, const PSI& b)
-        {
-            if (a.second == b.second) {
-                return a.first < b.first;
-            }
-            return a.second > b.second;
-        }
-    };
+class MedianFinder {
 public:
-    vector<string> topKFrequent(vector<string>& words, int k) {
-        priority_queue<PSI, vector<PSI>, cmp> heap;
+    priority_queue<int> left; // ?¸ù¶Ñ 
+    priority_queue<int, vector<int>, greater<int>> right; // ?¸ù¶Ñ 
+    MedianFinder() {
 
-        unordered_map<string, int> hash;
-        vector<string> ret;
-        for (auto& e : words)
+    }
+
+    void addNum(int num) {
+        if (left.size() == right.size())
         {
-            hash[e]++;
-        }
-        for (auto& e : hash)
-        {
-            heap.push(e);
-            if (heap.size() > k)
+            if (left.empty() || num < left.top())
             {
-                heap.pop();
+                left.push(num);
+            }
+            else
+            {
+                right.push(num);
+                left.push(right.top());
+                right.pop();
             }
         }
-
-        while (k--)
+        else
         {
-            ret.push_back(heap.top().first);
-            heap.pop();
+            if (num < left.top())
+            {
+                left.push(num);
+                right.push(left.top());
+                left.pop();
+            }
+            else
+            {
+                right.push(num);
+            }
         }
-        reverse(ret.begin(), ret.end());
-        return ret;
+    }
+
+    double findMedian() {
+        if (left.size() == right.size()) return (left.top() + right.top()) / 2.0;
+        else return left.top();
     }
 };
