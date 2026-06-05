@@ -1,9 +1,28 @@
-class KthLargest {
-    priority_queue<int, vector<int>, greater<int>> heap;
-    int _k;
+class Solution {
+
+    typedef pair<string, int> PSI;
+    class cmp
+    {
+    public:
+        bool operator()(const PSI& a, const PSI& b)
+        {
+            if (a.second == b.second) {
+                return a.first < b.first;
+            }
+            return a.second > b.second;
+        }
+    };
 public:
-    KthLargest(int k, vector<int>& nums) {
-        for (auto e : nums)
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        priority_queue<PSI, vector<PSI>, cmp> heap;
+
+        unordered_map<string, int> hash;
+        vector<string> ret;
+        for (auto& e : words)
+        {
+            hash[e]++;
+        }
+        for (auto& e : hash)
         {
             heap.push(e);
             if (heap.size() > k)
@@ -11,12 +30,13 @@ public:
                 heap.pop();
             }
         }
-        _k = k;
-    }
 
-    int add(int val) {
-        heap.push(val);
-        if (heap.size() > _k) heap.pop();
-        return heap.top();
+        while (k--)
+        {
+            ret.push_back(heap.top().first);
+            heap.pop();
+        }
+        reverse(ret.begin(), ret.end());
+        return ret;
     }
 };
