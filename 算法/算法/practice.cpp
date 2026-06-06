@@ -1,42 +1,31 @@
-class MedianFinder {
+class Solution {
+    typedef pair<int, int> PII;
+    int dx[4] = { 0,0,1,-1 };
+    int dy[4] = { 1,-1,0,0 };
 public:
-    priority_queue<int> left; // ?¸ù¶Ñ 
-    priority_queue<int, vector<int>, greater<int>> right; // ?¸ù¶Ñ 
-    MedianFinder() {
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int m = image.size();
+        int n = image[0].size();
+        int prev = image[sr][sc];
+        if (color == prev) return image;
 
-    }
+        queue<PII> q;
+        q.push({ sr,sc });
 
-    void addNum(int num) {
-        if (left.size() == right.size())
+        while (q.size())
         {
-            if (left.empty() || num < left.top())
+            auto [a, b] = q.front();
+            q.pop();
+            image[a][b] = color;
+            for (int i = 0;i < 4;i++)
             {
-                left.push(num);
-            }
-            else
-            {
-                right.push(num);
-                left.push(right.top());
-                right.pop();
+                int x = a + dx[i], y = b + dy[i];
+                if (x >= 0 && x < m && y >= 0 && y < n && image[x][y] == prev)
+                {
+                    q.push({ x,y });
+                }
             }
         }
-        else
-        {
-            if (num < left.top())
-            {
-                left.push(num);
-                right.push(left.top());
-                left.pop();
-            }
-            else
-            {
-                right.push(num);
-            }
-        }
-    }
-
-    double findMedian() {
-        if (left.size() == right.size()) return (left.top() + right.top()) / 2.0;
-        else return left.top();
+        return image;
     }
 };
