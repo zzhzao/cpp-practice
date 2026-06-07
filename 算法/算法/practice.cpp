@@ -1,31 +1,46 @@
 class Solution {
-    typedef pair<int, int> PII;
     int dx[4] = { 0,0,1,-1 };
     int dy[4] = { 1,-1,0,0 };
+    bool vis[301][301];
+    int m, n;
 public:
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-        int m = image.size();
-        int n = image[0].size();
-        int prev = image[sr][sc];
-        if (color == prev) return image;
-
-        queue<PII> q;
-        q.push({ sr,sc });
-
+    int numIslands(vector<vector<char>>& grid) {
+        m = grid.size();
+        n = grid[0].size();
+        int ret = 0;
+        for (int i = 0;i < m;i++)
+        {
+            for (int j = 0;j < n;j++)
+            {
+                if (grid[i][j] == '1' && !vis[i][j])
+                {
+                    bfs(grid, i, j);
+                    ret++;
+                }
+            }
+        }
+        return ret;
+    }
+    void bfs(vector<vector<char>>& grid, int i, int j)
+    {
+        queue<pair<int, int>> q;
+        q.push({ i,j });
+        vis[i][j] = true;
         while (q.size())
         {
             auto [a, b] = q.front();
+            grid[a][b] = '0';
             q.pop();
-            image[a][b] = color;
-            for (int i = 0;i < 4;i++)
+            for (int k = 0; k < 4;k++)
             {
-                int x = a + dx[i], y = b + dy[i];
-                if (x >= 0 && x < m && y >= 0 && y < n && image[x][y] == prev)
+                int x = a + dx[k];
+                int y = b + dy[k];
+                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == '1' && !vis[x][y])
                 {
+                    vis[x][y] = true;
                     q.push({ x,y });
                 }
             }
         }
-        return image;
     }
 };
