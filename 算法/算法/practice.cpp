@@ -4,47 +4,44 @@ class Solution {
     bool vis[301][301];
     int m, n;
 public:
-    int maxAreaOfIsland(vector<vector<int>>& grid) {
-        m = grid.size();
-        n = grid[0].size();
-        int ret = 0;
+    void solve(vector<vector<char>>& board) {
+
+        m = board.size();
+        n = board[0].size();
+        vector<vector<char>> ret(m, vector<char>(n, 'X'));
         for (int i = 0;i < m;i++)
         {
             for (int j = 0;j < n;j++)
             {
-                if (grid[i][j] == 1 && !vis[i][j])
+                if ((i == 0 || j == 0 || i == m - 1 || j == n - 1) && (board[i][j] == 'O'))
                 {
-                    int tmp = bfs(grid, i, j);
-                    ret = max(tmp, ret);
+                    bfs(board, ret, i, j);
                 }
             }
         }
-        return ret;
+        board = ret;
     }
-    int bfs(vector<vector<int>>& grid, int i, int j)
+    void bfs(vector<vector<char>>& board, vector<vector<char>>& ret, int i, int j)
     {
-        int ret = 0;
         queue<pair<int, int>> q;
         q.push({ i,j });
-        ret++;
+        ret[i][j] = 'O';
         vis[i][j] = true;
         while (q.size())
         {
             auto [a, b] = q.front();
-            grid[a][b] = 0;
             q.pop();
             for (int k = 0; k < 4;k++)
             {
                 int x = a + dx[k];
                 int y = b + dy[k];
-                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1 && !vis[x][y])
+                if (x >= 0 && x < m && y >= 0 && y < n && board[x][y] == 'O' && !vis[x][y])
                 {
-                    vis[x][y] = true;
                     q.push({ x,y });
-                    ret++;
+                    ret[x][y] = 'O';
+                    vis[x][y] = true;
                 }
             }
         }
-        return ret;
     }
 };
