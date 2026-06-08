@@ -1,32 +1,36 @@
 class Solution {
-    int dx[4] = { 0,0,1,-1 };
-    int dy[4] = { 1,-1,0,0 };
 public:
-    int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
-        int m = maze.size(), n = maze[0].size();
-        bool vis[m][n];
-        memset(vis, 0, sizeof(vis));
-        queue<pair<int, int>> q;
-        q.push({ entrance[0],entrance[1] });
-        vis[entrance[0]][entrance[1]] = true;
+    int minMutation(string startGene, string endGene, vector<string>& bank) {
+        unordered_map<string, int> hash;
         int step = 0;
+        for (auto e : bank)
+        {
+            hash[e]++;
+        }
+        string change = "ACGT";
+        queue<string> q;
+        q.push(startGene);
+        unordered_map<string, int> vis;
         while (q.size())
         {
             step++;
             int sz = q.size();
-            for (int j = 0; j < sz;j++)
+            for (int i = 0; i < sz; i++)
             {
-                auto [a, b] = q.front();
+                string str = q.front();
                 q.pop();
-                for (int i = 0;i < 4;i++)
+                for (int j = 0;j < 8;j++)
                 {
-                    int x = a + dx[i];
-                    int y = b + dy[i];
-                    if (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == '.' && !vis[x][y])
+                    string tmp = str;
+                    for (int k = 0; k < 4;k++)
                     {
-                        q.push({ x,y });
-                        vis[x][y] = true;
-                        if (x == 0 || x == m - 1 || y == 0 || y == n - 1)
+                        tmp[j] = change[k];
+                        if (hash[tmp] && !vis[tmp])
+                        {
+                            q.push(tmp);
+                            vis[tmp]++;
+                        }
+                        if (hash[tmp] && tmp == endGene)
                         {
                             return step;
                         }
