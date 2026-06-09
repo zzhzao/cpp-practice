@@ -1,36 +1,37 @@
 class Solution {
 public:
-    int minMutation(string startGene, string endGene, vector<string>& bank) {
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         unordered_map<string, int> hash;
-        int step = 0;
-        for (auto e : bank)
+        for (auto e : wordList)
         {
             hash[e]++;
         }
-        string change = "ACGT";
-        queue<string> q;
-        q.push(startGene);
         unordered_map<string, int> vis;
+
+        int step = 1;
+        queue<string> q;
+        q.push(beginWord);
+        vis[beginWord]++;
         while (q.size())
         {
             step++;
             int sz = q.size();
-            for (int i = 0; i < sz; i++)
+            for (int i = 0;i < sz;i++)
             {
                 string str = q.front();
                 q.pop();
-                for (int j = 0;j < 8;j++)
+                for (int j = 0;j < str.size();j++)
                 {
                     string tmp = str;
-                    for (int k = 0; k < 4;k++)
+                    for (char ch = 'a'; ch <= 'z'; ch++)
                     {
-                        tmp[j] = change[k];
+                        tmp[j] = ch;
                         if (hash[tmp] && !vis[tmp])
                         {
                             q.push(tmp);
                             vis[tmp]++;
                         }
-                        if (hash[tmp] && tmp == endGene)
+                        if (hash[tmp] && tmp == endWord)
                         {
                             return step;
                         }
@@ -38,6 +39,6 @@ public:
                 }
             }
         }
-        return -1;
+        return 0;
     }
 };
